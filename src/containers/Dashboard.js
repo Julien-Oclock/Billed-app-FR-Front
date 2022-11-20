@@ -86,9 +86,15 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
+    // console.log('handleEditTicket')
+    // console.log({bills : bills})
+    // console.log({bill : bill})
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
+    console.log(this.id, bill.id)
     if (this.counter % 2 === 0) {
+      console.log(this.counter)
+      console.log('dans le if')
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
@@ -96,7 +102,10 @@ export default class {
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
       $('.vertical-navbar').css({ height: '150vh' })
       this.counter ++
+      return true
     } else {
+      console.log('dans le else')
+
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
       $('.dashboard-right-container div').html(`
@@ -108,6 +117,7 @@ export default class {
     $('#icon-eye-d').click(this.handleClickIconEye)
     $('#btn-accept-bill').click((e) => this.handleAcceptSubmit(e, bill))
     $('#btn-refuse-bill').click((e) => this.handleRefuseSubmit(e, bill))
+    return false
   }
 
   handleAcceptSubmit = (e, bill) => {
@@ -131,6 +141,7 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
+     console.log('handleShowTickets')
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
@@ -146,7 +157,11 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      // add unbind to avoid multiple click event
+      $(`#open-bill${bill.id}`).unbind().click((e) => {
+        console.log('click')
+        this.handleEditTicket(e, bill, bills)
+      })
     })
 
     return bills

@@ -3,7 +3,7 @@ import { MONTHS_FR } from "../constants/bills.js"
 export const formatDate = (dateStr) => {
   if(dateStr !=  null){
   const dateTran = dateStr.split("-")
-  console.log("dateStr", dateTran)
+  // console.log("dateStr", dateTran)
   }
   // Ensure that the date coming from the database is valid
   const [y, m, d] = dateStr.split("-");
