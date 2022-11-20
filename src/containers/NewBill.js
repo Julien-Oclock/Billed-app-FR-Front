@@ -15,15 +15,24 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
+
+  //empêcher la saisie d'un document qui a une extension différente de jpg, jpeg ou png
   handleChangeFile = e => {
     e.preventDefault()
+
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
+    const fileExtension = file.name.split('.').pop()
+    const fileExtensionAllowed = ['jpg', 'jpeg', 'png']
+    if (!fileExtensionAllowed.includes(fileExtension)) {
+      alert('Seuls les fichiers jpg, jpeg et png sont acceptés')
+      return
+    } else {
+      const filePath = e.target.value.split(/\\/g)
+      const fileName = filePath[filePath.length-1]
+      const formData = new FormData()
+      const email = JSON.parse(localStorage.getItem("user")).email
+      formData.append('file', file)
+      formData.append('email', email)
 
     this.store
       .bills()
@@ -39,6 +48,8 @@ export default class NewBill {
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
+    }
+ 
   }
   handleSubmit = e => {
     e.preventDefault()
