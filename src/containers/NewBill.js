@@ -21,11 +21,16 @@ export default class NewBill {
     e.preventDefault()
 
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    // extension du fichier a ajouté
     const fileExtension = file.name.split('.').pop()
+    // extension des fichiers autorisés
     const fileExtensionAllowed = ['jpg', 'jpeg', 'png']
+    // si l'extension du fichier n'est pas autorisée
     if (!fileExtensionAllowed.includes(fileExtension)) {
+      // on affiche un message d'erreur
       alert('Seuls les fichiers jpg, jpeg et png sont acceptés')
       return
+      // sinon on ajoute le fichier
     } else {
       const filePath = e.target.value.split(/\\/g)
       const fileName = filePath[filePath.length-1]
