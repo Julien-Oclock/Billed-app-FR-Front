@@ -158,7 +158,7 @@ export default class {
 
     bills.forEach(bill => {
       // add unbind to avoid multiple click event
-      $(`#open-bill${bill.id}`).unbind().click((e) => {
+      $(`#open-bill${bill.id}`).off().click((e) => {
         console.log('click')
         this.handleEditTicket(e, bill, bills)
       })

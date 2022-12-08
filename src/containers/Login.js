@@ -26,7 +26,7 @@ export default class Login {
     this.localStorage.setItem("user", JSON.stringify(user))
     this.login(user)
       .catch(
-        (user) => this.createUser(user)
+        (err) => this.createUser(user)
       )
       .then(() => {
         this.onNavigate(ROUTES_PATH['Bills'])
@@ -48,7 +48,7 @@ export default class Login {
     this.localStorage.setItem("user", JSON.stringify(user))
     this.login(user)
       .catch(
-        (user) => this.createUser(user)
+        (err) => this.createUser(user)
       )
       .then(() => {
         this.onNavigate(ROUTES_PATH['Dashboard'])
@@ -59,6 +59,7 @@ export default class Login {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   login = (user) => {
     if (this.store) {
       return this.store
@@ -74,6 +75,7 @@ export default class Login {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   createUser = (user) => {
     if (this.store) {
       return this.store
