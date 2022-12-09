@@ -3,7 +3,6 @@ import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
 
 import Actions from './Actions.js'
-import { sortBillsByDate } from '../containers/Bills.js'
 
 const row = (bill) => {
   return (`
@@ -21,8 +20,13 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
-  return (data && data.length) ? sortBillsByDate(data) // on trie les factures par date
-            .map(bill => row(bill)).join("") : ""
+  const dataResult = Array.isArray(data) ? data.sort(function compare(a, b) {
+    var dateA = new Date(a.date);
+    var dateB = new Date(b.date);
+    return dateB - dateA;
+  }) : [];
+
+  return dataResult.map(bill => row(bill)).join("")
 }
 
 export default ({ data: bills, loading, error }) => {
