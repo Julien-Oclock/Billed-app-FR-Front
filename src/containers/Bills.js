@@ -1,5 +1,5 @@
 import { ROUTES_PATH } from '../constants/routes.js'
-import { convertToDate, formatDate, formatStatus } from "../app/format.js"
+import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
 
 export default class {
@@ -38,13 +38,13 @@ export default class {
             try {
               return {
                 ...doc,
-                date:  doc?.date? formatDate(doc?.date): "non definit",
+                date: formatDate(doc.date),
                 status: formatStatus(doc.status)
               }
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              // console.log(e,'for',doc)
+              console.log(e,'for',doc)
               return {
                 ...doc,
                 date: doc.date,
@@ -57,24 +57,4 @@ export default class {
       })
     }
   }
-
 }
-
-/**
- * Sort copy of bills by date
- * @param {Array of Object} bills 
- * @returns Array of Object bills
- */
-export const sortBillsByDate = (bills) => {
-  const billsCopy = [...bills];
-
-  billsCopy.sort((a, b) => {
-    const date1 = convertToDate(a.date);
-    const date2 = convertToDate(b.date);
-
-    if (date1 <= date2) return 1;
-    if (date1 > date2) return -1;
-  });
-
-  return billsCopy;
-};

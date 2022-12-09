@@ -15,29 +15,29 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
-
-  //empêcher la saisie d'un document qui a une extension différente de jpg, jpeg ou png
   handleChangeFile = e => {
     e.preventDefault()
-
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    // extension du fichier a ajouté
-    const fileExtension = file.name.split('.').pop()
-    // extension des fichiers autorisés
-    const fileExtensionAllowed = ['jpg', 'jpeg', 'png']
-    // si l'extension du fichier n'est pas autorisée
-    if (!fileExtensionAllowed.includes(fileExtension)) {
-      // on affiche un message d'erreur
-      alert('Seuls les fichiers jpg, jpeg et png sont acceptés')
-      return
-      // sinon on ajoute le fichier
-    } else {
-      const filePath = e.target.value.split(/\\/g)
-      const fileName = filePath[filePath.length-1]
-      const formData = new FormData()
-      const email = JSON.parse(localStorage.getItem("user")).email
-      formData.append('file', file)
-      formData.append('email', email)
+    let fileName = ''
+    let filePath = ''
+    if (file.type.match('jpeg|jpg|png')) {
+      filePath = e.target.value.split(/\\/g)
+      fileName = filePath[filePath.length-1]
+    }
+    else {
+      document.querySelector(`input[data-testid="file"]`).value = "";
+      filePath = ''
+      fileName = ''
+    }
+    console.log(fileName)
+    
+    
+    const formData = new FormData()
+    const email = JSON.parse(localStorage.getItem("user")).email
+    formData.append('file', file)
+    formData.append('email', email)
+
+    
 
     this.store
       .bills()
@@ -53,8 +53,6 @@ export default class NewBill {
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
-    }
- 
   }
   handleSubmit = e => {
     e.preventDefault()
