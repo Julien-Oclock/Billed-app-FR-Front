@@ -92,8 +92,8 @@ export default class {
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     console.log(this.id, bill.id)
     if (this.counter % 2 === 0) {
-      console.log(this.counter)
-      console.log('dans le if')
+      // console.log(this.counter)
+      // console.log('dans le if')
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
       })
@@ -102,7 +102,7 @@ export default class {
       $('.vertical-navbar').css({ height: '150vh' })
       this.counter ++
     } else {
-      console.log('dans le else')
+      // console.log('dans le else')
 
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
 
@@ -137,8 +137,14 @@ export default class {
     this.onNavigate(ROUTES_PATH['Dashboard'])
   }
 
+/**
+ * La fonction handleShowTickets gère l'affichage et la rotation de l'icône de flèche lorsque l'utilisateur clique sur l'une des catégories de factures. 
+ * Elle gère également l'affichage des cartes de factures en utilisant les fonctions filteredBills et getStatus. Lorsque l'utilisateur clique sur une facture pour
+ * l'ouvrir, l'événement de clic est désabonné pour éviter les conflits avec le gestionnaire d'événements de la fonction handleEditTicket.
+*/
   handleShowTickets(e, bills, index) {
      console.log('handleShowTickets')
+     // Si le compteur ou l'index n'a pas été défini, il est initialisé à 0
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
@@ -154,12 +160,8 @@ export default class {
     }
 
     bills.forEach(bill => {
-      // add off() to avoid multiple click event
+      // Désabonnement de l'événement de clic sur l'élément d'ouverture de facture
       $(`#open-bill${bill.id}`).off().click((e) => this.handleEditTicket(e, bill, bills))
-      // $(`#open-bill${bill.id}`).click((e) => {
-      //   console.log('click')
-      //   this.handleEditTicket(e, bill, bills)
-      // })
     })
 
     return bills

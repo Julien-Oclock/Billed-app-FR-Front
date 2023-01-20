@@ -42,14 +42,15 @@ export default class {
                 status: formatStatus(doc.status)
               }
             } catch(e) {
-              // if for some reason, corrupted data was introduced, we manage here failing formatDate function
-              // log the error and return unformatted date in that case
+              // Si la date n'est pas au bon format, on retourne une erreur
+              // on lo
               console.log(e,'for',doc)
-              return {
-                ...doc,
-                date: doc.date,
-                status: formatStatus(doc.status)
-              }
+              // return {
+              //   ...doc,
+              //   date: doc.date,
+              //   status: formatStatus(doc.status)
+              // }
+              return e
             }
           })
           // console.log('length', bills.length)

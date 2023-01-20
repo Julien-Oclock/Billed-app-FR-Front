@@ -19,6 +19,7 @@ const row = (bill) => {
     `)
   }
 
+  // trier les notes de frais par date
 const rows = (data) => {
   const dataResult = Array.isArray(data) ? data.sort(function compare(a, b) {
     var dateA = new Date(a.date);
