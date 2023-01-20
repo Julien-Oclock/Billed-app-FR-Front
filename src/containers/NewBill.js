@@ -15,30 +15,38 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
+  /**
+   * 
+   * @param {Event} e
+   * @returns 
+   */
   handleChangeFile = e => {
     e.preventDefault()
+    // Get the selected file
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     let fileName = ''
     let filePath = ''
     if (file.type.match('jpeg|jpg|png')) {
+      // Extract the file name and path
       filePath = e.target.value.split(/\\/g)
       fileName = filePath[filePath.length-1]
     }
     else {
+      // Clear the input value if the file type is not valid
       document.querySelector(`input[data-testid="file"]`).value = "";
       filePath = ''
       fileName = ''
     }
     console.log(fileName)
     
-    
+    // Create form data to send the file and email to the API
     const formData = new FormData()
+    // Get the email from local storage
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
 
-    
-
+    // Send the form data to the API
     this.store
       .bills()
       .create({
@@ -54,6 +62,7 @@ export default class NewBill {
         this.fileName = fileName
       }).catch(error => console.error(error))
   }
+
   handleSubmit = e => {
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
