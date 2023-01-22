@@ -160,7 +160,8 @@ export default class {
     }
 
     bills.forEach(bill => {
-      // Désabonnement de l'événement de clic sur l'élément d'ouverture de facture
+      // BUG FIX
+      //Désabonnement de l'événement de clic sur l'élément d'ouverture de facture
       $(`#open-bill${bill.id}`).off().click((e) => this.handleEditTicket(e, bill, bills))
     })
 

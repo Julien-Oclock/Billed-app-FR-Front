@@ -41,6 +41,8 @@ export default class Login {
     const user = {
       type: "Admin",
       // fix data-testid for admin email input
+      // email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
+      // password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
       email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
       password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
       status: "connected"
