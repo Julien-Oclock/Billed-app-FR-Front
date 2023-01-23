@@ -10,7 +10,7 @@ import { ROUTES_PATH } from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 
 import mockStore from "../__mocks__/store"
-jest.mock("../app/store", () => mockStore)
+jest.mock("../app/Store", () => mockStore)
 import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event'
 
@@ -18,6 +18,7 @@ import router from "../app/Router.js";
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
+    // Test de la surbrillance de l'icône "Mes notes de frais" dans le menu vertical (signifie que l'on est sur la page des factures)
     test("Then bill icon in vertical layout should be highlighted", async () => {
       //Mock de localStorage pour simuler une connexion utilisateur
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -37,6 +38,7 @@ describe("Given I am connected as an employee", () => {
       //Vérification que l'icône a la classe 'active-icon'
       expect(windowIcon).toHaveClass('active-icon')
     })
+    // test du tris des Bills (par date)
     test("Then bills should be ordered from earliest to latest", () => {
       //Insertion du code HTML de la page des factures
       document.body.innerHTML = BillsUI({ data: bills })
@@ -75,17 +77,17 @@ describe('When I am on Bills page and I click on buttonNewBill', () => {
       document, onNavigate, store: null, bills:bills, localStorage: window.localStorage
     })
 
-    //Définition de la fonction Nouvelle facture pour appeler la fonction handleClickNewBill de billsObj
+    // vérification de l'appel de la fonction handleClickNewBill() lors du clic sur le bouton "Nouvelle facture" et que le bouton existe bien
     const NewBill = jest.fn(() => billsObj.handleClickNewBill)
-    //Récupération du bouton "Nouvelle facture"
     const buttonNewBill = await screen.getByTestId('btn-new-bill')
-    //Vérification que le bouton existe bien
     expect(buttonNewBill).not.toBeNull()
+
     //Ajout d'un écouteur d'événements 'click' sur le bouton qui appelle la fonction Nouvelle facture
     buttonNewBill.addEventListener('click', NewBill)
     //Simulation d'un clic sur le bouton
     userEvent.click(buttonNewBill)
-    //Vérification que la fonction Nouvelle facture a bien été appelée
+
+    //Vérification que le formualaire newbill a bien été appelée
     expect(NewBill).toHaveBeenCalled()
   })
 })

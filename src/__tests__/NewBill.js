@@ -7,7 +7,7 @@ import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 
 import mockStore from "../__mocks__/store"
-jest.mock("../app/store", () => mockStore)
+jest.mock("../app/Store", () => mockStore)
 
 // import Bills from "../containers/Bills.js"
 import { bills } from "../fixtures/bills.js"

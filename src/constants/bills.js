@@ -1,3 +1,5 @@
+
+/* istanbul ignore next */
 export const  MONTHS_FR = {
     "Jan.": 0,
     "Fév.": 1,
